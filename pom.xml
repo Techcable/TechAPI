@@ -1,0 +1,61 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.techcable</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0.4</version>
+    </parent>
+    <artifactId>techapi</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>TechAPI</name>
+    <description>A collection of useful resources offered as a rest API</description>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <mainClass>net.techcable.techapi.TechAPI</mainClass>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>18.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sparkjava</groupId>
+            <artifactId>spark-core</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.14</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>TechAPI</finalName>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>techcable-repo</id>
+            <url>http://repo.techcable.net/content/groups/public</url>
+        </repository>
+    </repositories>
+</project>
