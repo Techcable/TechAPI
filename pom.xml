@@ -37,14 +37,9 @@
             <version>2.2.3</version>
         </dependency>
         <dependency>
-            <groupId>net.sf.opencsv</groupId>
-            <artifactId>opencsv</artifactId>
-            <version>2.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.yaml</groupId>
-            <artifactId>snakeyaml</artifactId>
-            <version>1.14</version>
+            <groupId>be.maximvdw</groupId>
+            <artifactId>spigotsite</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
@@ -56,6 +51,10 @@
         <repository>
             <id>techcable-repo</id>
             <url>http://repo.techcable.net/content/groups/public</url>
+        </repository>
+        <repository>
+            <id>maximvdw-repo</id>
+            <url>http://repo.mvdw-software.be/content/groups/public/</url>
         </repository>
     </repositories>
 </project>

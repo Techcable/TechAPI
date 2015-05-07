@@ -32,12 +32,13 @@ import com.google.common.util.concurrent.SettableFuture;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.techcable.techapi.mcp.FieldData;
-import net.techcable.techapi.mcp.MCPDataLoader;
-import net.techcable.techapi.mcp.MethodData;
+
 import net.techcable.techapi.uuid.ProfileUtils;
 import net.techcable.techapi.uuid.ProfileUtils.PlayerProfile;
-import org.yaml.snakeyaml.Yaml;
+
+import be.maximvdw.spigotsite.api.SpigotSite;
+import be.maximvdw.spigotsite.api.SpigotSiteAPI;
+
 import spark.Request;
 import spark.Response;
 
@@ -54,15 +55,6 @@ public class TechAPI {
 
     public static void main(String[] args) throws IOException {
         setPort(12345);
-        Yaml yaml = new Yaml();
-        File configFile = new File("config.yml");
-        APIConfig config;
-        if (!configFile.exists()) {
-            configFile.createNewFile();
-            CharSink out = Files.asCharSink(configFile, Charsets.UTF_8);
-            CharSource in = Resources.asCharSource(Resources.getResource("config.yml"), Charsets.UTF_8);
-            out.writeFrom(in.openBufferedStream());
-        }
         CharSource in = Files.asCharSource(configFile, Charsets.UTF_8);
         config = new APIConfig((Map<String, String>) yaml.load(in.openBufferedStream()));
         get("/minecraft/uuid/:name", (Request request, Response response) -> {
@@ -96,30 +88,6 @@ public class TechAPI {
                 }
             }
             return "";
-        });
-        Pattern srgMethodPattern = Pattern.compile("func_\\d+_.+");
-        Pattern fieldMethodPattern = Pattern.compile("field_\\d+_.+");
-        MCPDataLoader loader = new MCPDataLoader();
-        loader.reload();
-        get("/mcp/field/srg/:srg", (Request request, Response response) -> {
-            response.header(HttpHeaders.CONTENT_TYPE, MediaType.PLAIN_TEXT_UTF_8.toString());
-            Matcher m = fieldMethodPattern.matcher(request.params(":srg"));
-            if (!m.matches()) {
-                return "invalid";
-            }
-            SettableFuture<FieldData> future = SettableFuture.create();
-            FieldData data = loader.getField(request.params(":srg"));
-            return data.getObf() + "||" + data.getSrg() + "||" + data.getMcp();
-        });
-        get("/mcp/method/srg/:srg", (Request request, Response response) -> {
-            response.header(HttpHeaders.CONTENT_TYPE, MediaType.PLAIN_TEXT_UTF_8.toString());
-            Matcher m = srgMethodPattern.matcher(request.params(":srg"));
-            if (!m.matches()) {
-                return "invalid";
-            }
-            MethodData data = loader.getMethod(request.params(":srg"));
-            return (data.getObf() != null ? data.getObf() : "unknown") + "||" + data.getSrg() + "||"
-                    + (data.getMcp() == null ? data.getSrg() : data.getMcp() + "||" + loader.getSignature(data));
         });
     }
 }
